@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<html>
+   <head>
+      <!-- Latest compiled and minified CSS -->
+      <title>My Event Planner</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <!-- Optional theme -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+            <link href="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+      <script
+         src="https://code.jquery.com/jquery-3.1.1.min.js"
+         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+         crossorigin="anonymous"></script>
+      <!-- Latest compiled and minified JavaScript -->
+
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js">
+    </script>
+  <style media="screen">
+
+body{margin-top:20px;}
+
+ul.notes li {
+margin: 10px 40px 50px 0px;
+float: left;
+}
+
+ul.notes li, ul.tag-list li {
+list-style: none;
+}
+
+ul.notes li div small {
+position: absolute;
+top: 5px;
+right: 5px;
+font-size: 10px;
+}
+
+div.rotate-1 {
+-webkit-transform: rotate(-6deg);
+-o-transform: rotate(-6deg);
+-moz-transform: rotate(-6deg);
+}
+
+div.rotate-2 {
+-o-transform: rotate(4deg);
+-webkit-transform: rotate(4deg);
+-moz-transform: rotate(4deg);
+position: relative;
+top: 5px;
+}
+
+.lazur-bg {
+background-color: #23c6c8;
+color: #ffffff;
+}
+
+.red-bg {
+background-color: #ed5565;
+color: #ffffff;
+}
+
+.navy-bg {
+background-color: #1ab394;
+color: #ffffff;
+}
+
+.yellow-bg {
+background-color: #f8ac59;
+color: #ffffff;
+}
+
+ul.notes li div {
+text-decoration: none;
+color: #000;
+display: block;
+height: 210px;
+width: 210px;
+padding: 1em;
+-moz-box-shadow: 5px 5px 7px #212121;
+-webkit-box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+-moz-transition: -moz-transform 0.15s linear;
+-o-transition: -o-transform 0.15s linear;
+-webkit-transition: -webkit-transform 0.15s linear;
+}
+
+.navbar-header{
+  margin-left:5px;
+  width:100%;
+}
+  </style>
+   </head>
+   <body>
+
+    <div class="row"  style="margin-top:-1.5%;">
+      <nav class="navbar navbar-inverse bg-inverse">
+  <a style="margin-left:2%;" class="navbar-brand" href="#">
+    My Event Planner
+  </a>
+  <div>
+  <div class="pull-right" style="margin-right:2%;margin-top:-1%;">
+    <h1 class="btn btn-primary col-4" data-toggle="modal" data-target="#myModal">Add Job</h1>
+  </div>
+  
+</nav>
+    </div>
+    
+     <div class="row">
+     <ul class="notes">
+      <%for(let i = 0 ; i < data.length ; i++){%>
+       <%for(let j = 0 ; j < data[i].jobs.length ; j++){%>
+       <li>
+               <div class="rotate-1 lazur-bg">
+                   <small><%=dateformat(data[i].job_at,'dd/mm/yy')%></small>
+                   <h4><%=data[i].jobs[j].description%></h4>
+                   <p>Location:<%=data[i].jobs[j].location%></p>
+                   <p>start time: <%=normalTime(data[i].jobs[j].start_time)%> endtime: <%=normalTime(data[i].jobs[j].end_time)%></p>
+                   <a href="#" class="text-danger pull-right"><i class="fa fa-trash-o "></i></a>
+               </div>
+        </li>
+      <%}%>
+      <%}%>
+   </ul>
+ </div>
+     <!--loading modal -->
+     <div id="waitmodal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" >
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+     <h1>waiting</h1>
+    </div>
+  </div>
+</div>
+     <!--end modal-->
+      <!--modal begining-->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                     <h4 class="modal-title" id="myModalLabel">Add Job</h4>
+                  </div>
+                  <div class="modal-body">
+               <form id="plan" onsubmit="return submitPost()">
+               <div class="form-group">
+               <label for="description">description</label>
+               <input type="text" class="form-control" id="description" placeholder="description">
+               </div>
+               <div class="form-group">
+               <label for="location">location</label>
+               <input type="text" class="form-control" id="location" placeholder="location eg:jurong">
+               </div>
+               <div class="form-group">
+               <label for="timing">timing</label>
+               <div class="row">
+               <div class="col-md-6">
+               <select class="form-control" id="start_time" name="start_time">
+               <option value="9">9  AM</option>
+               <option value="10">10 AM</option>
+               <option value="11">11 AM</option>
+               <option value="12">12 AM</option>
+               <option value="13">1  PM</option>
+               <option value="14">2  PM</option>
+               <option value="15">3  PM</option>
+               <option value="16">4  PM</option>
+               <option value="17">5  PM</option>
+               <option value="18">6  PM</option>
+               </select>
+               </div>
+               <div class="col-md-6">
+               <select class="form-control" id="end_time" name="end_time">
+               <option value="9">9  AM</option>
+               <option value="10">10 AM</option>
+               <option value="11">11 AM</option>
+               <option value="12">12 AM</option>
+               <option value="13">1  PM</option>
+               <option value="14">2  PM</option>
+               <option value="15">3  PM</option>
+               <option value="16">4  PM</option>
+               <option value="17">5  PM</option>
+               <option value="18">6  PM</option>
+               </select>
+               </div>
+               </div>
+               </div>
+               <div class="form-group">
+                 <label for="date">date</label>
+                 <div class="input-append date form_datetime">
+                   <input size="16" type="text" id="date" value="" class="form-control" readonly>
+                   <span class="add-on"><i class="icon-th"></i></span>
+                 </div>
+               </div>
+               </div>
+               <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Add Job</button>
+               </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <!--modal end-->
+
+      
+
+    <script type="text/javascript">
+        $(".form_datetime").datetimepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            minuteStep: 60
+        });
+        $('.form_datetime').datetimepicker('.form_datetime')
+        function submitPost() {
+          let description = document.getElementById('description').value
+          let location = document.getElementById('location').value
+          let end_time = parseInt(document.getElementById('end_time').value)
+          let start_time = parseInt(document.getElementById('start_time').value)
+          let date = document.getElementById('date').value
+          let data = JSON.stringify({
+            description: description,
+            location: location,
+            end_time: end_time,
+            start_time: start_time,
+            date: date
+          })
+          fetch('/v1/jobs', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: data
+          }).
+          then((res) => {
+            $('#waitmodal').modal('hide')
+            console.log(res);
+            return res.json()
+          })
+          .then((result) => {
+            toastr.info(result.message)
+          })
+          .catch((err) => {
+            console.log("errpr");
+            console.log(err);
+          })
+          $('#myModal').modal('hide')
+          $('#waitmodal').modal('show')
+          return false
+        }
+    </script>
+
+   </body>
+
+</html>
