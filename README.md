@@ -1,5 +1,5 @@
 # glorgo-backend-solution
-my internship assignment solution 
+my internship assignment solution hosted at heroku (http://glorgo.herokuapp.com/)
 # installation 
  ```
  npm install
