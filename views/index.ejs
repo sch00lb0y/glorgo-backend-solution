@@ -107,17 +107,17 @@ box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
   <div class="pull-right" style="margin-right:2%;margin-top:-1%;">
     <h1 class="btn btn-primary col-4" data-toggle="modal" data-target="#myModal">Add Job</h1>
   </div>
-  
+
 </nav>
     </div>
-    
+
      <div class="row">
      <ul class="notes">
       <%for(let i = 0 ; i < data.length ; i++){%>
        <%for(let j = 0 ; j < data[i].jobs.length ; j++){%>
        <li>
                <div class="rotate-1 lazur-bg">
-                   <small><%=dateformat(data[i].job_at,'dd/mm/yy')%></small>
+                   <small><%=`${data[i].job_at.getDate()-1}/${data[i].job_at.getMonth()+1}/${data[i].job_at.getFullYear()}`%></small>
                    <h4><%=data[i].jobs[j].description%></h4>
                    <p>Location:<%=data[i].jobs[j].location%></p>
                    <p>start time: <%=normalTime(data[i].jobs[j].start_time)%> endtime: <%=normalTime(data[i].jobs[j].end_time)%></p>
@@ -207,7 +207,7 @@ box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
       </div>
       <!--modal end-->
 
-      
+
 
     <script type="text/javascript">
         $(".form_datetime").datetimepicker({
@@ -242,7 +242,12 @@ box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
             return res.json()
           })
           .then((result) => {
-            toastr.info(result.message)
+            let reg = new RegExp(/slot assigned/)
+            if (reg.test(result.message)) {
+              window.location.reload()
+            } else {
+               toastr.info(result.message)
+            }
           })
           .catch((err) => {
             console.log("errpr");

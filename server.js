@@ -9,6 +9,6 @@ app.set('view engine', 'ejs')
 app.use(morgon('combined'))
 app.use('/', require('./route/index.js'))
 app.use('/v1/jobs', require('./api/jobs.js'))
-app.listen(2000)
-console.log(`app is listening at 2000`)
+app.listen(process.env.PORT)
+console.log(`app is listening at ${process.env.PORT}`)
 module.exports = app
