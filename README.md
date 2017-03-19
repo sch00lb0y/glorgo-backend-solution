@@ -19,3 +19,4 @@ npm start
 ## env variable
 - MONGOURL 
 - PORT
+- MOCHA
