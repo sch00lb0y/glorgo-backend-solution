@@ -29,8 +29,8 @@
    ```
 5) 
    ## stack used : node,mongodb
-   if slot not available best possible time slot on that day will be shown              
-   check readme for installation 
+   - if slot not available best possible time slot on that day will be shown              
+   check readme for installation (https://github.com/sch00lb0y/glorgo-backend-solution)
   
   ## Thanks
    ### balaji
