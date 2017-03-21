@@ -117,7 +117,7 @@ box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
        <%for(let j = 0 ; j < data[i].jobs.length ; j++){%>
        <li>
                <div class="rotate-1 lazur-bg">
-                   <small><%=`${data[i].job_at.getDate()-1}/${data[i].job_at.getMonth()+1}/${data[i].job_at.getFullYear()}`%></small>
+                   <small><%=`${data[i].job_at.getDate()}/${data[i].job_at.getMonth()+1}/${data[i].job_at.getFullYear()}`%></small>
                    <h4><%=data[i].jobs[j].description%></h4>
                    <p>Location:<%=data[i].jobs[j].location%></p>
                    <p>start time: <%=normalTime(data[i].jobs[j].start_time)%> endtime: <%=normalTime(data[i].jobs[j].end_time)%></p>
