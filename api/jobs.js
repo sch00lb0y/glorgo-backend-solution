@@ -8,7 +8,9 @@ router.post('/', bodyParser.json(), (req, res, next) => {
   let day = req.body.date.split('/')[0]
   console.log(`${year}-${month}-${day}T18:30:00.000Z`);
   let date = new Date(`${year}-${month}-${day}T18:30:00.000Z`)
-  if (date.getDay() < 5 || req.body.start_time!=req.body.end_time) {
+  console.log(req.body.start_time);
+  console.log(req.body.end_time);
+  if (date.getDay() < 5 || parseInt(req.body.start_time)!=parseInt(req.body.end_time)) {
   userModel.
   insertJob(date, req.body.description, req.body.start_time, req.body.end_time, req.body.location)
   .then((x) => {
@@ -23,7 +25,7 @@ router.post('/', bodyParser.json(), (req, res, next) => {
     })
   })
 } else {
-  if (req.body.start_time == req.body.end_time) {
+  if (parseInt(req.body.start_time) == parseInt(req.body.end_time)) {
    res.json({
      message:'start and end time is same'
    })
