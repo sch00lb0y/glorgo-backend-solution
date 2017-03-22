@@ -10,6 +10,7 @@ router.post('/', bodyParser.json(), (req, res, next) => {
   let date = new Date(`${year}-${month}-${day}T18:30:00.000Z`)
   console.log(req.body.start_time);
   console.log(req.body.end_time);
+  console.log(parseInt(req.body.start_time) != parseInt(req.body.end_time));
   if (date.getDay() < 5 || parseInt(req.body.start_time) != parseInt(req.body.end_time)) {
   userModel.
   insertJob(date, req.body.description, req.body.start_time, req.body.end_time, req.body.location)
